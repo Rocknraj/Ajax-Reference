@@ -3,10 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Ajax Test 2</title>
-<meta name="description" content="This is the second Ajax test. The server page called will return a text string calling a function on this page, then it is eval'd." />
+<meta name="description" content="This is the second Ajax test. The server page called will return a text string following the syntax of calling a function that is defined on this page. The text is eval'd and the function runs." />
 <link href="css/test.css" rel="stylesheet" />
-
+<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css" />
 <script type="text/javascript" src="js/jquery.1.7.1.js"></script>
+<script language="javascript" src="js/shCore.js"></script>
+<script language="javascript" src="js/shBrushAll.js"></script>
 <script type="text/javascript">
 <!--
 function showName(name){
@@ -26,7 +28,7 @@ $(document).ready(function(){
   		dataType: "text",
   		success: function(text){
     		eval(text);
-			$("#main").append("This is what came back from the server: "+text);
+			$("#main p:first").append("This is what came back from the server: "+text);
   }
 });
 		
@@ -47,6 +49,55 @@ $(document).ready(function(){
 <input name="inputName" id="inputName" type="text" size="20" maxlength="20" />
 <input name="btn1" id="btn1" type="button" value="Send" />
 </form>
+<p>Client Side Code:<br />
+Note that the Ajax call is expecting the return data to be text. When it comes back, the function runs <strong>eval()</strong> on it, causing the returned text to be run as JavaScript. In this case, the string calls a function, showName. The argument is taken from the user input at the text box.</p>
+<pre name="code" class="jscript">
+function showName(name){//function called in the Ajax return
+	alert(name);
+}
+$(document).ready(function(){
+	
+	$('#btn1').click(function(e) {
+        
+		e.preventDefault();
+		
+		$.ajax({
+ 		type: "POST",
+  		url: "test2.php",
+  		cache: false,
+  		data: "inputName="+$("#inputName").val(),
+  		dataType: "text",
+  		success: function(text){
+    		eval(text);
+			$("#main p:first").append("This is what came back from the server: "+text);
+  }
+});
+		
+    });
+
+
+
+});
+</pre>
+<p>Server Side Code:<br />
+Note the header telling the browser this content is text. You can see the JavaScript code piece being built from the form input and static string contents. It is good practice to have the Content-type header matching the data type the Ajax call is told to expect in line 15 above.</p>
+<textarea name="code" class="php">
+<?php
+
+header("Content-type: text/plain");
+//write the function call to showName() with the user input as the argument
+echo "showName('".$_POST['inputName']."');";
+
+
+
+?>
+</textarea>
 </div>
+<script type="text/javascript">
+<!--
+dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+dp.SyntaxHighlighter.HighlightAll('code');
+//-->
+</script>
 </body>
 </html>
