@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ajax Test 2</title>
+<meta name="description" content="This is the second Ajax test. The server page called will return a text string following the syntax of calling a function that is defined on this page. The text is eval'd and the function runs." />
+<link href="css/test.css" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css" />
+<script type="text/javascript" src="js/jquery.1.7.1.js"></script>
+<script language="javascript" src="js/shCore.js"></script>
+<script language="javascript" src="js/shBrushAll.js"></script>
+<script type="text/javascript">
+<!--
+function showName(name){
+	alert(name);
+}
+$(document).ready(function(){
+	
+	$('#btn1').click(function(e) {
+        
+		e.preventDefault();
+		
+		$.ajax({
+ 		type: "POST",
+  		url: "test2.php",
+  		cache: false,
+  		data: "inputName="+$("#inputName").val(),
+  		dataType: "text",
+  		success: function(text){
+    		eval(text);
+			$("#main p:first").append("This is what came back from the server: "+text);
+  }
+});
+		
+    });
+
+
+
+});
+//-->
+</script>
+
+</head>
+
+<body>
+<div id="main">
+<p>Put your name in the form below and click to witness the magic of Ajax.</p>
+<form action="test1.php" method="post">
+<input name="inputName" id="inputName" type="text" size="20" maxlength="20" />
+<input name="btn1" id="btn1" type="button" value="Send" />
+</form>
+<p>Client Side Code:<br />
+</p>
+<pre name="code" class="jscript">
+
+$(document).ready(function(){
+	
+	$('#btn1').click(function(e) {
+        
+		e.preventDefault();
+		
+		$.ajax({
+ 		type: "POST",
+  		url: "test2.php",
+  		cache: false,
+  		data: "inputName="+$("#inputName").val(),
+  		dataType: "text",
+  		success: function(text){
+    		eval(text);
+			$("#main p:first").append("This is what came back from the server: "+text);
+  }
+});
+		
+    });
+
+
+
+});
+</pre>
+<p>Server Side Code:<br />
+</p>
+<textarea name="code" class="php">
+<?php
+
+header("Content-type: text/plain");
+//write the function call to showName() with the user input as the argument
+echo "showName('".$_POST['inputName']."');";
+
+
+
+?>
+</textarea>
+</div>
+<script type="text/javascript">
+<!--
+dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+dp.SyntaxHighlighter.HighlightAll('code');
+//-->
+</script>
+</body>
+</html>
