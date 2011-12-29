@@ -5,13 +5,13 @@
 <title>Ajax Test 3</title>
 <meta name="description" content="This is the third Ajax test. The server page called will return a dataType of script/javascript, so it should run on success b/c that is how jQuery's Ajax handles the script data type. Many ways to do the same thing." />
 <link href="css/test.css" rel="stylesheet" />
-
+<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css" />
 <script type="text/javascript" src="js/jquery.1.7.1.js"></script>
+<script language="javascript" src="js/shCore.js"></script>
+<script language="javascript" src="js/shBrushAll.js"></script>
 <script type="text/javascript">
 <!--
-function showName(name){
-	alert(name);
-}
+
 $(document).ready(function(){
 	
 	$('#btn1').click(function(e) {
@@ -44,6 +44,51 @@ $(document).ready(function(){
 <input name="inputName" id="inputName" type="text" size="20" maxlength="20" />
 <input name="btn1" id="btn1" type="button" value="Send" />
 </form>
+<p>Client Side Code:<br />
+Note that the Ajax call is expecting the return data to be JavaScript. When it comes back the line of generated code is executed. Unlike samples <a href="test01.html" target="_blank">one</a> and <a href="test02.html" target="_blank">two</a>, the eval() function is not needed.</p>
+<pre name="code" class="jscript">
+
+$(document).ready(function(){
+	
+	$('#btn1').click(function(e) {
+        
+		e.preventDefault();
+		
+		$.ajax({
+ 		type: "POST",
+  		url: "test3.php",
+  		cache: false,
+  		data: "inputName="+$("#inputName").val(),
+  		dataType: "script",
+  		success: function(script){}//This needs to be here to define and act on the success event,
+        //but it can be empty since the return is executable JavaScript
+});
+		
+    });
+
+
+
+});
+</pre>
+<p>Server Side Code:<br />
+Note the header telling the browser this content is JavaScript. You can see the JavaScript code piece being built from the form input and static string contents. It is good practice to have the Content-type header matching the data type the Ajax call is told to expect in line 12 above.</p>
+<textarea name="code" class="php">
+<?php
+
+header("Content-type: application/JavaScript");
+
+echo "alert('".$_POST['inputName']."');";
+
+
+
+?>
+</textarea>
 </div>
+<script type="text/javascript">
+<!--
+dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+dp.SyntaxHighlighter.HighlightAll('code');
+//-->
+</script>
 </body>
 </html>
