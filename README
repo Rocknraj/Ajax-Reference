@@ -8,4 +8,15 @@ family and its uses
 3. Working with the SASS tool for CSS creation
 
 index.php - just like it's name says, this includes a static introduction to the whole project,
-and reads the HTML files via curl to create links to them and include descriptions on the page.
+reads the directory to create links to the HTML files and reads them via Curl to include 
+descriptions on the page.
+
+testXX.html - these files include the Ajax functionalities and their descriptions. Using
+Gorbatchev syntax highlighter to highlight the source code examples. Using the jQuery
+library and its Ajax object.
+
+testXX.php - these files are the server side processing scipts that the .html Ajax files
+are communicating with. As in Ajax, these files pretty much stay in the background and
+are not presented to the user. Their source code is shown and explained in the .html files.
+The numbers in their name corresponds to the .html file that communicates with them,
+i.e.: test2.php is called via Ajax from test02.html.
