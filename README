@@ -1,0 +1,11 @@
+This is a code base with three purposes.
+
+1. Using git for version control and repository
+
+2. Creating a set of Ajax code covering the full base of the Ajax technology
+family and its uses
+
+3. Working with the SASS tool for CSS creation
+
+index.php - just like it's name says, this includes a static introduction to the whole project,
+and reads the HTML files via curl to create links to them and include descriptions on the page.
