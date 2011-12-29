@@ -1,0 +1,31 @@
+.red {
+color: red;
+}
+
+//comments using this convention don't appear in our css
+
+body {
+	font-size: 16px;
+	font-family: Arial,Helvetica, Sans-Serif;
+}
+
+#outer {
+	width: 100%;
+	display: block;
+	position: relative;
+}
+
+#main {
+	width: 960px;
+	display: block;
+	position: relative;
+	margin: 12px auto;
+}
+
+#main ul{
+	margin-top: 8px;
+	list-style-type: none;
+	li {
+		padding-top: 8px;
+	}
+}
