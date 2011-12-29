@@ -48,7 +48,7 @@ function grabStuff($open, $close, $page){
 $file_list = scandir(getcwd());
 foreach ($file_list as $list_item) {
 	
-if (($list_item != ".") && ($list_item != "..") && ($list_item != "css") && ($list_item != "js") && ($list_item != "images") && ($list_item != "flash")){
+if (($list_item != ".") && ($list_item != "..") && ($list_item != "css") && ($list_item != "js") && ($list_item != "images") && ($list_item != "flash") && ($list_item != "_notes") && ($list_item != ".git") && ($list_item != "README") && ($list_item != "testXX.html")){
 	$file_type = explode(".",$list_item);
 	$file_type = $file_type[1];
 	
