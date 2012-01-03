@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ajax Test 4</title>
+<meta name="description" content="This is the fourth Ajax test. The server response here is a little more complext to allow for updating of two elements from the same Ajax response." />
+<link href="css/test.css" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css" />
+<style type='text/css'>
+
+* { font-family: Tahoma, Arial, sans-serif; }
+
+#helloTitle{ color: #48f; }
+
+.sidebar{
+
+  background-color: #adf;
+
+  color: navy;
+
+  border: solid blue 1px;
+
+  width: 180px;
+
+  height: 200px;
+
+  padding: 2px;
+
+  margin: 3px;
+
+  float: left;
+
+}
+
+</style>
+<script type="text/javascript" src="js/jquery.1.7.1.js"></script>
+<script language="javascript" src="js/shCore.js"></script>
+<script language="javascript" src="js/shBrushAll.js"></script>
+<script type="text/javascript">
+<!--
+
+$(document).ready(function(){
+	
+	
+
+	
+	$('#helloBtn').click(function(e) {
+        
+		e.preventDefault();
+		
+		$.ajax({
+ 		type: "POST",
+  		url: "test4.php",
+  		cache: false,
+  		data: "inputName="+$("#helloTxt").val(),
+  		dataType: "text",
+  		success: function(text){
+    		
+			eval(text);
+			$("#main > div > p:first").append("<br />This is what the server returned: "+text);
+			
+			
+  }
+});
+		
+    });
+	
+
+
+
+
+
+});
+
+function updateName(name,isLong){
+
+  $('#helloTitle').html("<h1>Hello, <b><i>"+name+"</i></b></h1>");
+
+  var listDivId=+(isLong) ? '#longNames' : '#shortNames';
+
+  $(listDivId).append(name+"<br/>");
+
+
+
+}
+//-->
+</script>
+
+</head>
+
+<body>
+<div id="main">
+<div id='shortNames' class='sidebar'>
+
+<h5>People I've met with short names</h5><hr/>
+
+</div>
+
+<div id='longNames' class='sidebar'>
+
+<h5>People I've met with long names</h5><hr/>
+
+</div>
+
+<div>
+
+<div id='helloTitle'>
+
+<h1>Hello, stranger</h1>
+
+</div>
+
+<p>Please introduce yourself by entering your name in the box below</p>
+<form action="">
+<input type='text' size='24' id='helloTxt'></input>&nbsp;<button id='helloBtn'>Submit</button></form>
+
+</div>
+<p>Client Side Code:<br />
+After our first examples, this should be pretty straight-forward by now. The server's response is eval'd and therefor executed.
+</p>
+<pre name="code" class="jscript">
+
+$(document).ready(function(){
+	
+	
+
+	
+	$('#helloBtn').click(function(e) {
+        
+		e.preventDefault();
+		
+		$.ajax({
+ 		type: "POST",
+  		url: "test4.php",
+  		cache: false,
+  		data: "inputName="+$("#helloTxt").val(),
+  		dataType: "text",
+  		success: function(text){
+    		
+			eval(text);
+            $("#main > div > p:first").append("<br />This is what the server returned: "+text);
+			
+  }
+});
+		
+    });
+	
+
+
+
+
+
+});
+
+function updateName(name,isLong){
+
+  $('#helloTitle').html("<h1>Hello, <b><i>"+name+"</i></b></h1>");
+
+  var listDivId=+(isLong) ? '#longNames' : '#shortNames';
+
+  $(listDivId).append(name+"<br/>");
+
+}
+</pre>
+<p>Server Side Code:<br />
+</p>
+<textarea name="code" class="php">
+<?php
+
+header("Content-type: text/plain");
+$name=$_POST['inputName'];
+$isLong=(strlen($name)>8);
+if ($isLong != 1){
+	$isLong = 0;
+}
+echo "updateName('".$name."','".$isLong."');";
+
+
+
+?>
+</textarea>
+</div>
+<script type="text/javascript">
+<!--
+dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+dp.SyntaxHighlighter.HighlightAll('code');
+//-->
+</script>
+</body>
+</html>
